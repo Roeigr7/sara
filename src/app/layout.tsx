@@ -3,7 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
-const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+/** Google Search Console — keep this meta tag after verification (do not remove). */
+const googleSiteVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
+  "TBEJ7dzmi2oJE8gDcEpX3bFVr166mlpO8XU28fY6EI8";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,9 +67,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  ...(googleSiteVerification
-    ? { verification: { google: googleSiteVerification } }
-    : {}),
+  verification: {
+    google: googleSiteVerification,
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
