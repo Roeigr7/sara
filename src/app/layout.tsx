@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { siteUrl } from "@/lib/site";
@@ -77,35 +77,20 @@ export const metadata: Metadata = {
   verification: {
     google: googleSiteVerification,
   },
+  /** Favicon for SERP / tabs — Google recommends ≥48×48; source: /public/moz.png */
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: "/moz.png", type: "image/png", sizes: "48x48" },
+      { url: "/moz.png", type: "image/png", sizes: "192x192" },
+      { url: "/moz.png", type: "image/png", sizes: "512x512" },
     ],
-    shortcut: [{ url: '/favicon.ico', sizes: 'any' }],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'icon',
-        url: '/android-chrome-192x192.png',
-        sizes: '192x192',
-        type: 'image/png'
-      },
-      {
-        rel: 'icon',
-        url: '/android-chrome-512x512.png',
-        sizes: '512x512',
-        type: 'image/png'
-      },
-      {
-        rel: 'manifest',
-        url: '/site.webmanifest',
-      },
-    ],
+    shortcut: [{ url: "/moz.png", type: "image/png" }],
+    apple: [{ url: "/moz.png", type: "image/png", sizes: "180x180" }],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -116,15 +101,10 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
-        <link rel="manifest" href="/site.webmanifest" />
+        {/* Explicit primary favicon — Google SERP uses site favicon (see Search Central favicon guidelines) */}
+        <link rel="icon" href="/moz.png" type="image/png" sizes="48x48" />
+        <link rel="apple-touch-icon" href="/moz.png" />
         <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -147,6 +127,7 @@ export default function RootLayout({
                     "שירות משפטי מקצועי בתחומי המשפט האזרחי, מעמד אישי, צוואות, ייפוי כוח מתמשך ונדל״ן",
                   url: siteUrl,
                   image: `${siteUrl}/sara.jpg`,
+                  logo: `${siteUrl}/moz.png`,
                   telephone: "+972-50-6466711",
                   email: "Sara_987654@walla.com",
                   address: {
