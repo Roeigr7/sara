@@ -101,8 +101,9 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
-        {/* Explicit primary favicon — Google SERP uses site favicon (see Search Central favicon guidelines) */}
-        <link rel="icon" href="/moz.png" type="image/png" sizes="48x48" />
+        {/* Favicon: moz.png (rewrites map /favicon.ico → /moz.png in next.config) */}
+        <link rel="icon" href="/moz.png" type="image/png" />
+        <link rel="shortcut icon" href="/moz.png" type="image/png" />
         <link rel="apple-touch-icon" href="/moz.png" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <script
