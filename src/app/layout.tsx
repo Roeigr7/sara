@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { siteUrl } from "@/lib/site";
+
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,20 +27,20 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://if-beta.vercel.app'),
+  metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
     title: "עורכת דין שרה מיכל אדרי - משפט אזרחי ומעמד אישי",
     description: "שירות משפטי מקצועי בתחומי המשפט האזרחי, מעמד אישי, צוואות וייפוי כוח מתמשך. ניסיון של שנים בישראל.",
-    url: 'https://if-beta.vercel.app',
+    url: siteUrl,
     siteName: "עורכת דין שרה מיכל אדרי",
     locale: "he_IL",
     type: "website",
     images: [
       {
-        url: "/og-image.jpg", // Add this image later
+        url: "/sara.jpg",
         width: 1200,
         height: 630,
         alt: "עורכת דין שרה מיכל אדרי",
@@ -48,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "עורכת דין שרה מיכל אדרי - משפט אזרחי ומעמד אישי",
     description: "שירות משפטי מקצועי בתחומי המשפט האזרחי, מעמד אישי, צוואות וייפוי כוח מתמשך.",
-    images: ["/og-image.jpg"],
+    images: [`${siteUrl}/sara.jpg`],
   },
   robots: {
     index: true,
@@ -61,9 +64,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-site-verification-code', // Add actual verification code
-  },
+  ...(googleSiteVerification
+    ? { verification: { google: googleSiteVerification } }
+    : {}),
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -103,7 +106,6 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
-        <link rel="canonical" href="https://if-beta.vercel.app" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -118,36 +120,51 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LegalService",
-              "name": "עורכת דין שרה מיכל אדרי",
-              "description": "שירות משפטי מקצועי בתחומי המשפט האזרחי, מעמד אישי, צוואות, ייפוי כוח מתמשך ונדל״ן",
-              "url": "https://if-beta.vercel.app",
-              "telephone": "+972-50-6466711",
-              "email": "Sara_987654@walla.com",
-              "address": {
-                "@type": "PostalAddress",
-                "addressCountry": "IL"
-              },
-              "areaServed": {
-                "@type": "Country",
-                "name": "ישראל"
-              },
-              "serviceType": [
-                "משפט אזרחי",
-                "מעמד אישי",
-                "צוואות",
-                "ייפוי כוח מתמשך",
-                "נדל״ן"
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteUrl}/#website`,
+                  url: siteUrl,
+                  name: "עורכת דין שרה מיכל אדרי",
+                  inLanguage: "he-IL",
+                  publisher: { "@id": `${siteUrl}/#organization` },
+                },
+                {
+                  "@type": "LegalService",
+                  "@id": `${siteUrl}/#organization`,
+                  name: "עורכת דין שרה מיכל אדרי",
+                  description:
+                    "שירות משפטי מקצועי בתחומי המשפט האזרחי, מעמד אישי, צוואות, ייפוי כוח מתמשך ונדל״ן",
+                  url: siteUrl,
+                  image: `${siteUrl}/sara.jpg`,
+                  telephone: "+972-50-6466711",
+                  email: "Sara_987654@walla.com",
+                  address: {
+                    "@type": "PostalAddress",
+                    addressCountry: "IL",
+                  },
+                  areaServed: {
+                    "@type": "Country",
+                    name: "ישראל",
+                  },
+                  serviceType: [
+                    "משפט אזרחי",
+                    "מעמד אישי",
+                    "צוואות",
+                    "ייפוי כוח מתמשך",
+                    "נדל״ן",
+                  ],
+                  founder: {
+                    "@type": "Person",
+                    name: "שרה מיכל אדרי",
+                    jobTitle: "עורכת דין",
+                  },
+                  priceRange: "$$",
+                  openingHours: "Mo-Fr 09:00-18:00",
+                  sameAs: [],
+                },
               ],
-              "founder": {
-                "@type": "Person",
-                "name": "שרה מיכל אדרי",
-                "jobTitle": "עורכת דין"
-              },
-              "priceRange": "$$",
-              "openingHours": "Mo-Fr 09:00-18:00",
-              "sameAs": []
-            })
+            }),
           }}
         />
       </head>
