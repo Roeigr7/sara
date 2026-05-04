@@ -4,9 +4,16 @@ import "./globals.css";
 import { siteUrl } from "@/lib/site";
 
 /** Google Search Console — keep this meta tag after verification (do not remove). */
-const googleSiteVerification =
-  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
+const GOOGLE_SITE_VERIFICATION_DEFAULT =
   "TBEJ7dzmi2oJE8gDcEpX3bFVr166mlpO8XU28fY6EI8";
+const fromEnv = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+// Ignore empty or placeholder values (e.g. if Vercel env was set to the old template)
+const googleSiteVerification =
+  fromEnv &&
+  fromEnv !== "your-google-site-verification-code" &&
+  !fromEnv.startsWith("your-google-")
+    ? fromEnv
+    : GOOGLE_SITE_VERIFICATION_DEFAULT;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
