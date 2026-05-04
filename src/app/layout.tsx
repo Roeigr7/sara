@@ -77,16 +77,7 @@ export const metadata: Metadata = {
   verification: {
     google: googleSiteVerification,
   },
-  /** Favicon for SERP / tabs — Google recommends ≥48×48; source: /public/moz.png */
-  icons: {
-    icon: [
-      { url: "/moz.png", type: "image/png", sizes: "48x48" },
-      { url: "/moz.png", type: "image/png", sizes: "192x192" },
-      { url: "/moz.png", type: "image/png", sizes: "512x512" },
-    ],
-    shortcut: [{ url: "/moz.png", type: "image/png" }],
-    apple: [{ url: "/moz.png", type: "image/png", sizes: "180x180" }],
-  },
+  // Tab / SERP icons: use `app/icon.png` & `app/apple-icon.png` (same artwork as public/moz.png)
 };
 
 export const viewport: Viewport = {
@@ -101,10 +92,6 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
-        {/* Favicon: moz.png (rewrites map /favicon.ico → /moz.png in next.config) */}
-        <link rel="icon" href="/moz.png" type="image/png" />
-        <link rel="shortcut icon" href="/moz.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/moz.png" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <script
           type="application/ld+json"
